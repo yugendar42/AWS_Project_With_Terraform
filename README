@@ -16,7 +16,12 @@
 │   │   ├── variables.tf
 │   │   └── outputs.tf
 │   │
-│   └── /load_balancer
+│   ├── /load_balancer
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   │
+│   └── /s3_bucket            
 │       ├── main.tf
 │       ├── variables.tf
 │       └── outputs.tf
@@ -26,6 +31,7 @@
 ├── variables.tf
 ├── outputs.tf
 └── terraform.tfvars
+
 
 ===========================================================================================================================
 
