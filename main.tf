@@ -31,7 +31,7 @@ module "load_balancer" {
 }
 
 module "s3_bucket" {
-  source      = "./modules/s3_bucket" 
+  source      = "./modules/s3_bucket"
   bucket_name = module.s3_bucket.s3_bucket_name
 }
 
