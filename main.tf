@@ -30,6 +30,12 @@ module "load_balancer" {
   ec2_instance_ids  = [module.ec2_instances.instance1_id, module.ec2_instances.instance2_id]
 }
 
+module "s3_bucket" {
+  source      = "./modules/s3_bucket" 
+  bucket_name = module.s3_bucket.s3_bucket_name
+}
+
+
 output "loadbalancer_dns" {
   value = module.load_balancer.lb_dns_name
 }
