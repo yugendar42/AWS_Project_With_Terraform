@@ -25,6 +25,6 @@ variable "availability_zones" {
   default = ["us-east-1a", "us-east-1b"]
 }
 
-variable "s3_bucket_name" {
+variable "bucket_name" {
   default = "Yugendar_s3_bucket"
 }

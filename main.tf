@@ -32,9 +32,8 @@ module "load_balancer" {
 
 module "s3_bucket" {
   source      = "./modules/s3_bucket"
-  bucket_name = module.s3_bucket.s3_bucket_name
+  bucket_name = var.bucket_name
 }
-
 
 output "loadbalancer_dns" {
   value = module.load_balancer.lb_dns_name
