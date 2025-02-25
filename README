@@ -1,0 +1,210 @@
+/AWS_PROJECT_WITHTERRAFORM
+│
+├── /modules
+│   ├── /networking
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   │
+│   ├── /security_group
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   │
+│   ├── /ec2
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── outputs.tf
+│   │
+│   └── /load_balancer
+│       ├── main.tf
+│       ├── variables.tf
+│       └── outputs.tf
+│
+├── main.tf
+├── provider.tf
+├── variables.tf
+├── outputs.tf
+└── terraform.tfvars
+
+===========================================================================================================================
+
+
+Steps to Install Chocolatey
+
+1. Open PowerShell as Administrator:
+   ---> Click the Start button, type "PowerShell", right-click Windows PowerShell, and select Run as Administrator.
+
+2. Set the Execution Policy: Before you install Chocolatey, you may need to change the execution policy to allow scripts to run. Run the following command in the PowerShell window:
+
+       Set-ExecutionPolicy Bypass -Scope Process -Force
+
+3. Install Chocolatey: Now, run the following command to install Chocolatey:
+       ---> This will download and run the installation script from the official Chocolatey website.
+
+       iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+
+
+4. Verify Installation: After the script completes, you can verify that Chocolatey was successfully installed by checking its version:
+
+       choco --version
+
+       ---> If Chocolatey is installed correctly, you should see the version number displayed in the terminal.
+
+======================================================================================
+5. Now install the terraform 
+
+       choco install terraform -y
+
+6. Verify the terraform installation.
+
+       terraform --version
+
+7. Now install AWS CLI tool
+
+       choco install awscli -y 
+
+8. Verify the awscli version
+
+       aws --version
+
+ if awscli version not show in terminal please follow below commands 
+
+       PS C:\WINDOWS\system32> Get-ExecutionPolicy
+       >>
+       Restricted
+
+       PS C:\WINDOWS\system32> Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass -Force
+       >>
+
+       PS C:\WINDOWS\system32> Import-Module "$env:ChocolateyInstall\helpers\chocolateyProfile.psm1"
+       >>
+
+       PS C:\WINDOWS\system32> refreshenv
+       >>
+       Refreshing environment variables from the registry for powershell.exe. Please wait...
+       Finished
+
+       PS C:\WINDOWS\system32> aws --version
+       >>
+       aws-cli/2.24.10 Python/3.12.9 Windows/11 exe/AMD64
+
+===================================================================
+After of compllestion of Above steps
+Create IAM User in AWS account. (if you are doing 1st time, continue with root account but it is NOT GOOD PRACTICE)
+
+Configure the AWS Account to terminal 
+
+Go to AWS Profile ---> Security Credentials ----> Access Keys ----> Create Access Keys 
+
+Copy Key ID and Secret Key somewhare it is one time view Only.
+
+NOTE: Do Not Share this ID and Secret Key with anyone. 
+
+Now come to terminal give the command as below
+1. aws Configure
+
+AWS Access Key ID [None]: ABCDXXXXXXXXXXXXX
+AWS Secret Access Key [None]: ************************************
+Default region name [None]: us-east-1
+Default output format [None]: Json
+
+
+Run the following commands
+
+1. terraform init 
+
+       * **Initializes a Terraform working directory.**
+       * **Configures the backend:** Sets up where Terraform state is stored.
+       * **Downloads provider plugins:** Installs the necessary provider software.
+       * **Downloads modules:** Fetches any required Terraform modules.
+       * **Creates a lock file:** Records provider versions for consistency.
+       * **Performs basic configuration checks.**
+
+2. terraform fmt
+
+       * **Formats Terraform code** for consistency.
+       * **Ensures standard style:** Indentation, spacing, etc.
+
+3. terraform validate
+
+       * **Checks Terraform configuration syntax and internal consistency.**
+       * **Verifies if the configuration is syntactically valid and internally consistent.**
+       * **Does not check provider-specific logic or interact with remote resources.**
+
+--------------------------------------------------------------------------------------------------
+| Feature          | terraform fmt                         | terraform validate                   |
+|------------------|---------------------------------------|--------------------------------------|
+| Purpose          | Code style and formatting             | Syntax and internal consistency      |
+| Action           | Rewrites code to a standard format    | Checks for errors and inconsistencies|
+| Focus            | Readability and consistency           | Correctness and functionality        |
+| Changes Code     | Yes (formatting changes)              | No (analysis only)                   |
+| Checks           | Indentation, spacing, style           | Syntax, missing arguments, logic     |
+| Provider checks  | No                                    | No                                   |
+---------------------------------------------------------------------------------------------------
+
+4. terraform plan
+
+       * **Creates an execution plan:** Shows what Terraform *will* do without actually making changes.
+       * **Previews changes:** Displays the resources that will be created, modified, or destroyed.
+       * **Helps prevent surprises:** Allows you to review and verify changes before applying them.
+
+5. terraform apply
+
+       * **Executes the changes defined in the Terraform plan.**
+       * **Creates, modifies, or destroys infrastructure resources.**
+       * **Updates the Terraform state file to reflect the actual infrastructure.**
+
+6. terraform destroy 
+
+       * ** It will delete entire infrastructure.
+
+===================================================================================================================================
+
+Additiona Info
+
+
+How to Use .tfvars Files with Terraform ?
+
+Apply with Default terraform.tfvars
+
+Terraform automatically loads terraform.tfvars when you run the following command:
+
+terraform apply
+
+If the terraform.tfvars is named terraform.tfvars, it will be automatically loaded by Terraform without any extra flags.
+
+Apply with a Specific .tfvars File
+
+If you have multiple environment-specific .tfvars files (like dev.tfvars, prod.tfvars, etc.), you can explicitly specify which .tfvars file to use when running terraform apply:
+
+terraform apply -var-file="dev.tfvars"
+
+Example .tfvars File for the Given Configuration
+Let's say you have a development environment and a production environment. Here's an example of what your dev.tfvars file might look like:
+
+dev.tfvars:
+
+cidr = "10.0.0.0/16"
+subnet1_cidr = "10.0.0.0/24"
+subnet2_cidr = "10.0.1.0/24"
+availability_zones = ["us-east-1a", "us-east-1b"]
+ami = "ami-0261755bbcb8c4a84"
+instance_type = "t2.micro"
+s3_bucket_name = "dev-Yugendar_s3_bucket"
+
+And for production, you can have another file like prod.tfvars:
+
+prod.tfvars:
+
+cidr = "10.1.0.0/16"
+subnet1_cidr = "10.1.0.0/24"
+subnet2_cidr = "10.1.1.0/24"
+availability_zones = ["us-east-1a", "us-east-1b"]
+ami = "ami-01b8c4ff3c2263465"
+instance_type = "t3.medium"
+s3_bucket_name = "prod-Yugendar_s3_bucket"
+
+When running the terraform apply, you can specify which environment to use:
+
+terraform apply -var-file="prod.tfvars"
