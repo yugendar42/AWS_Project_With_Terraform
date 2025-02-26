@@ -26,5 +26,5 @@ variable "availability_zones" {
 }
 
 variable "bucket_name" {
-  default = "Yugendar_s3_bucket"
+  default = "yugendars3storage"
 }
